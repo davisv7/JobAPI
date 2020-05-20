@@ -1,6 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from flask_json import FlaskJSON, as_json
-from helperfunctions import reset_db, loginToDB
+from helperfunctions import reset_db, loginToDB, insert_job
 
 app = Flask(__name__)
 FlaskJSON(app)
@@ -11,6 +11,23 @@ FlaskJSON(app)
 def reset():
     try:
         reset_db()
+        response = {
+            "reset_status_code": "1"
+        }
+    except Exception as e:
+        print(e, flush=True)
+        response = {
+            "reset_status_code": "0"
+        }
+    return response
+
+
+@app.route('/api/insert_job', methods=['GET', 'POST'])
+@as_json
+def insert_job():
+    job = request.get_json()
+    try:
+        insert_job(job)
         response = {
             "reset_status_code": "1"
         }

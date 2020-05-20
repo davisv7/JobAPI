@@ -58,3 +58,14 @@ def loginToDB():
                                   host=host,
                                   database=database)
     return cnx
+
+
+def insert_job(job_data):
+    client = loginToDB()
+    cursor = client.cursor()
+    add_job = ("INSERT INTO JobInstance "
+               "(jobInstanceId, jobTemplateName, JobTemplateVersion, runDate, applicationArguments,status) "
+               "VALUES (%s, %s, %s, %s, %s,%s)")
+    cursor.execute(add_job, job_data)
+    cursor.close()
+    client.close()
