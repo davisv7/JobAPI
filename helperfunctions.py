@@ -69,3 +69,39 @@ def insert_job(job_data):
     cursor.execute(add_job, job_data)
     cursor.close()
     client.close()
+
+
+def insert_config(config_data):
+    client = loginToDB()
+    cursor = client.cursor()
+    add_config = ("INSERT INTO Config "
+                  "(name, value) "
+                  "VALUES (%s, %s)")
+    cursor.execute(add_config, config_data)
+    cursor.close()
+    client.close()
+
+
+def insert_template(jobTemp_data):
+    client = loginToDB()
+    cursor = client.cursor()
+    add_jobTemp = ("INSERT INTO JobTemplate "
+                   "("
+                   "jobTemplateName,"
+                   " jobTemplateVersion, "
+                   "dynamicAllocation, "
+                   "initialExecutors, "
+                   "minExecutors,"
+                   "maxExecutors,"
+                   "schedulerBacklogTimeout,"
+                   "executorIdleTimeout,"
+                   "customConfigs,"
+                   "environmentVariables,"
+                   "applicationArtifactLocation,"
+                   "defaultApplicationArguments,"
+                   "dependencyJars"
+                   ") "
+                   "VALUES (%s, %s, %s, %s, %s,%s,%s, %s, %s, %s, %s,%s, %s )")
+    cursor.execute(add_jobTemp, jobTemp_data)
+    cursor.close()
+    client.close()
