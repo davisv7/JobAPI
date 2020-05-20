@@ -1,5 +1,5 @@
 import mysql.connector
-from config import username, password, host, database
+from config import username, password, host, database, port
 from jobclasses import TABLES
 
 
@@ -22,6 +22,7 @@ def reset_db():
                 print("already exists.")
             else:
                 print(err.msg)
+            raise err
         else:
             print("OK")
 
@@ -36,7 +37,8 @@ def create_database(cnx):
             "CREATE DATABASE {} DEFAULT CHARACTER SET 'utf8'".format(database))
     except mysql.connector.Error as err:
         print("Failed creating database: {}".format(err))
-        exit(1)
+        return
+        # exit(1)
 
     try:
         cursor.execute("USE {}".format(database))
@@ -54,9 +56,12 @@ def create_database(cnx):
 
 
 def loginToDB():
-    cnx = mysql.connector.connect(user=username, password=password,
+    cnx = mysql.connector.connect(user=username,
+                                  password=password,
                                   host=host,
-                                  database=database)
+                                  port=port,
+                                  database=database,
+                                  )
     return cnx
 
 
