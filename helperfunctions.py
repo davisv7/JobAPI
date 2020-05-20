@@ -42,7 +42,7 @@ def create_database(cnx):
         cursor.execute("USE {}".format(database))
     except mysql.connector.Error as err:
         print("Database {} does not exists.".format(database))
-        if err.errno == errorcode.ER_BAD_DB_ERROR:
+        if err.errno == 1049:
             create_database(cursor)
             print("Database {} created successfully.".format(database))
             cnx.database = database
