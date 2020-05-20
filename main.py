@@ -24,7 +24,7 @@ def reset():
 
 @app.route('/api/insert_job', methods=['GET', 'POST'])
 @as_json
-def insert_job():
+def insert():
     job = request.get_json()
     try:
         insert_job(job)
